@@ -1,0 +1,32 @@
+-- first of all login as super user i.e. postgres
+
+CREATE USER user_smartbrain WITH NOCREATEDB NOCREATEROLE PASSWORD 'sbrain123';
+
+CREATE DATABASE db_smartbrain;
+
+\c db_smartbrain;
+
+CREATE SCHEMA schema_smartbrain AUTHORIZATION user_smartbrain;
+
+ALTER USER user_smartbrain SET search_path=schema_smartbrain;
+
+
+
+ \c db_smartbrain user_smartbrain
+ 
+CREATE TABLE schema_smartbrain.users (
+  id      serial PRIMARY KEY,
+  name    VARCHAR(100),
+  email   TEXT UNIQUE NOT NULL,
+  entries BIGINT DEFAULT 0,
+  joined timestamp NOT NULL
+);
+
+ \c db_smartbrain user_smartbrain;
+
+CREATE TABLE schema_smartbrain.login (
+  id serial PRIMARY KEY,
+  hash VARCHAR(100) not null,
+  email TEXT UNIQUE NOT NULL
+);
+
